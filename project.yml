@@ -6,6 +6,5 @@ packages:
         binary: false
         runtime: nodejs:18
         web: true
-        webSecure: false
         environment:
           BOT_TOKEN: "${BOT_TOKEN}"
