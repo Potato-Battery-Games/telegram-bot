@@ -1,0 +1,11 @@
+{
+  "name": "potato_battery_games_bot_webhook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "author": "Ivan Orekhov",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "telegraf": "4.16.3"
+  }
+}

@@ -1,0 +1,11 @@
+packages:
+  - name: potato_battery_games_bot
+    shared: false
+    functions:
+      - name: webhook
+        binary: false
+        runtime: nodejs:18
+        web: true
+        webSecure: false
+        environment:
+          BOT_TOKEN: "${BOT_TOKEN}"
