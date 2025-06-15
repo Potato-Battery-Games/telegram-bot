@@ -14,9 +14,12 @@ bot.command("/games", (ctx) => {
   ctx.sendGame("GlowHook");
 });
 
+bot.help(Telegraf.reply("We will be ready soon!"));
+
 bot.gameQuery((ctx) => {
   ctx.answerGameQuery(process.env.GLOW_HOOK_URL);
 });
+
 async function main(body) {
   try {
     // Process the webhook update
