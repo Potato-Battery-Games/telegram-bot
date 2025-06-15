@@ -9,7 +9,7 @@ bot.start((ctx) => {
   );
 });
 
-bot.command("/play", (ctx) => {
+bot.command("/games", (ctx) => {
   ctx.reply("🎮 Try our new game: Glow Hook");
   ctx.sendGame("GlowHook");
 });
