@@ -5,8 +5,13 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // Bot commands
 bot.start((ctx) => {
   ctx.reply(
-    `👋 Hello! I am Potato Battery Games Bot. I am here to help you play our games.\n\nCurrently we are preparing for the launch of our first game, so stay tuned!\n\nYou can follow us on Telegram: @potato_battery`
+    `👋 Hello! I am Potato Battery Games Bot. I am here to help you play our games.\n\nYou can also follow us on Telegram: @potato_battery`
   );
+  ctx.reply("Available commands:", {
+    reply_markup: {
+      inline_keyboard: [[{ text: "🎮 Games", callback_data: "games" }]],
+    },
+  });
 });
 
 bot.command("games", async (ctx) => {
