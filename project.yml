@@ -8,3 +8,4 @@ packages:
         web: true
         environment:
           BOT_TOKEN: "${BOT_TOKEN}"
+          GLOW_HOOK_URL: "${GLOW_HOOK_URL}"
