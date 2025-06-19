@@ -1,5 +1,6 @@
 const { Telegraf } = require("telegraf");
 const { PostHog } = require("posthog-node");
+const { games } = require("./commands/games");
 
 const posthogClient = new PostHog(process.env.POSTHOG_API_KEY, {
   host: "https://eu.i.posthog.com",
@@ -23,19 +24,22 @@ bot.start((ctx) => {
   });
 });
 
+bot.action("games", async (ctx) => {
+  posthogClient.capture({
+    distinctId: "anonymous",
+    event: "games_button_clicked",
+  });
+
+  await games(ctx);
+});
+
 bot.command("games", async (ctx) => {
   posthogClient.capture({
     distinctId: "anonymous",
     event: "games_command_used",
   });
 
-  try {
-    await ctx.reply("🎮 Try our new game: Glow Hook");
-    await ctx.sendGame("GlowHook");
-  } catch (error) {
-    console.error("Error sending game:", error);
-    await ctx.reply("Sorry, something went wrong. Please try again later.");
-  }
+  await games(ctx);
 });
 
 bot.help((ctx) => {
