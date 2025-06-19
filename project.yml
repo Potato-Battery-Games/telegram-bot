@@ -9,3 +9,4 @@ packages:
         environment:
           BOT_TOKEN: "${BOT_TOKEN}"
           GLOW_HOOK_URL: "${GLOW_HOOK_URL}"
+          POSTHOG_API_KEY: "${POSTHOG_API_KEY}"

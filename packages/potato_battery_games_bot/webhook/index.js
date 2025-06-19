@@ -1,9 +1,18 @@
 const { Telegraf } = require("telegraf");
+const { PostHog } = require("posthog-node");
 
+const posthogClient = new PostHog(process.env.POSTHOG_API_KEY, {
+  host: "https://eu.i.posthog.com",
+});
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Bot commands
 bot.start((ctx) => {
+  posthogClient.capture({
+    distinctId: "anonymous",
+    event: "bot_started",
+  });
+
   ctx.reply(
     `👋 Hello! I am Potato Battery Games Bot. I am here to help you play our games.\n\nYou can also follow us on Telegram: @potato_battery`
   );
@@ -15,6 +24,11 @@ bot.start((ctx) => {
 });
 
 bot.command("games", async (ctx) => {
+  posthogClient.capture({
+    distinctId: "anonymous",
+    event: "games_command_used",
+  });
+
   try {
     await ctx.reply("🎮 Try our new game: Glow Hook");
     await ctx.sendGame("GlowHook");
@@ -24,13 +38,30 @@ bot.command("games", async (ctx) => {
   }
 });
 
-bot.help(Telegraf.reply("We will be ready soon!"));
+bot.help((ctx) => {
+  posthogClient.capture({
+    distinctId: "anonymous",
+    event: "help_command_used",
+  });
+
+  ctx.reply("We will be ready soon!");
+});
 
 bot.gameQuery((ctx) => {
+  posthogClient.capture({
+    distinctId: "anonymous",
+    event: "game_query_received",
+  });
+
   ctx.answerGameQuery(process.env.GLOW_HOOK_URL);
 });
 
 async function main(body) {
+  posthogClient.capture({
+    distinctId: "anonymous",
+    event: "webhook_received",
+  });
+
   try {
     // Process the webhook update
     await bot.handleUpdate(body);
@@ -44,6 +75,8 @@ async function main(body) {
       statusCode: 500,
       body: "Internal Server Error",
     };
+  } finally {
+    await posthogClient.flush();
   }
 }
 
